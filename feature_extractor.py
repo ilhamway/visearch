@@ -2,12 +2,17 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
 import numpy as np
+import cv2 as cv
 
 class FeatureExtractor:
     def __init__(self):
         base_model = VGG16(weights="imagenet")
         self.model = Model(inputs=base_model.input, outputs=base_model.get_layer("fc1").output)
+        self.varible = "coba"
 
+    def modelfun(self,coba):
+        print(coba)
+        self.model.summary()
 
     def extract(self,img):
         img = img.resize((224,224)).convert("RGB")
@@ -16,3 +21,6 @@ class FeatureExtractor:
         x = preprocess_input(x) #substract average pixel value
         feature = self.model.predict(x)[0]
         return feature / np.linalg.norm(feature) #normalize
+
+fe = FeatureExtractor()
+fe.modelfun("coba")
